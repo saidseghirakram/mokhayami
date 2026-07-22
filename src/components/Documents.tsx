@@ -4,7 +4,7 @@ import { FileText, Users, Stethoscope, School, PenLine, Camera, Banknote, AlertT
 
 const documents = [
   { icon: FileText, text: "نسخة من شهادة الميلاد" },
-  { icon: Users, text: "نسخة من بطاقة العائلة" },
+  { icon: Users, text: "بطاقة إقامة" },
   { icon: Stethoscope, text: "شهادة طبية عامة" },
   { icon: School, text: "شهادة طبية مدرسية" },
   { icon: PenLine, text: "تصريح الأبوين (موافقة خطية)" },

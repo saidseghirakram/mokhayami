@@ -41,42 +41,55 @@ In the first row (Row 1), add these column headers **one by one** from left to r
 
 **Delete** the default code and paste this code:
 
-  ```javascript
-  function doPost(e) {
-    try {
-      // Get data from the request
-      const data = JSON.parse(e.postData.contents);
-      
-      // Get the active sheet
-      const sheet = SpreadsheetApp.getActiveSheet();
-      
-      // Add data in a new row
-      sheet.appendRow([
-        data.timestamp,           // Timestamp
-        data.name,                // First Name
-        data.lastName,            // Last Name
-        data.birthDate,           // Birth Date
-        data.birthPlace,          // Birth Place
-        data.educationLevel,      // Education Level
-        data.phone,               // Phone Number
-        data.previousCamp,        // Previous Camp
-        data.previousCampDetails, // Previous Camp Details
-        data.memorizationLevel,   // Memorization Level
-        data.address,             // Address
-        data.email,               // Email
-        data.referralSource       // Referral Source
-      ]);
-      
-      // Send success response
-      return ContentService.createTextOutput(JSON.stringify({success: true}))
-        .setMimeType(ContentService.MimeType.JSON);
-    } catch (error) {
-      // Send error response
-      return ContentService.createTextOutput(JSON.stringify({success: false, error: error.toString()}))
-        .setMimeType(ContentService.MimeType.JSON);
-    }
+```javascript
+function doPost(e) {
+  try {
+    // Get data from the request
+    const data = JSON.parse(e.postData.contents);
+    
+    // Get the active sheet
+    const sheet = SpreadsheetApp.getActiveSheet();
+    
+    // Log to console for debugging
+    Logger.log("Data received: " + JSON.stringify(data));
+    
+    // Add data in a new row
+    sheet.appendRow([
+      data.timestamp,           // Timestamp
+      data.name,                // First Name
+      data.lastName,            // Last Name
+      data.birthDate,           // Birth Date
+      data.birthPlace,          // Birth Place
+      data.educationLevel,      // Education Level
+      data.phone,               // Phone Number
+      data.previousCamp,        // Previous Camp
+      data.previousCampDetails, // Previous Camp Details
+      data.memorizationLevel,   // Memorization Level
+      data.address,             // Address
+      data.email,               // Email
+      data.referralSource       // Referral Source
+    ]);
+    
+    // Send success response
+    return ContentService.createTextOutput(JSON.stringify({success: true}))
+      .setMimeType(ContentService.MimeType.JSON);
+  } catch (error) {
+    // Log error for debugging
+    Logger.log("Error: " + error.toString());
+    
+    // Send error response
+    return ContentService.createTextOutput(JSON.stringify({success: false, error: error.toString()}))
+      .setMimeType(ContentService.MimeType.JSON);
   }
-  ```
+}
+
+// Function to view logs
+function viewLogs() {
+  const logs = Logger.getLog();
+  Logger.log("=== EXECUTION LOG ===");
+  Logger.log(logs);
+}
+```
 
 ---
 
@@ -123,23 +136,58 @@ const SCRIPT_URL = "https://script.google.com/macros/s/YOUR_SCRIPT_ID/userconten
 
 ## Troubleshooting
 
-### Problem: Data does not appear in the Google Sheet
-**Solution:**
-- Check that the SCRIPT_URL is correct
-- Make sure "Who has access" is set to "Anyone"
-- Try creating a new deployment
+### Problem: Status 200 but no data in Google Sheet
+**This is the most common issue. Here's how to fix it:**
 
-### Problem: Form shows success but no data in sheet
-**Solution:**
-- Check the deployment URL is complete and correct
-- Verify all column headers are in the correct order
-- Clear browser cache and refresh
+**Step 1: Check if script is receiving data**
+1. Go back to Google Apps Script editor
+2. Click on **"Executions"** tab (left sidebar)
+3. Look at the most recent execution
+4. Click on it to see the logs
+5. Look for "Data received:" message
 
-### Problem: Error message in form
+**Step 2: If you see the data in logs:**
+- The script IS receiving data correctly
+- The problem is likely the column order
+- Make sure your column headers in Row 1 of the sheet match the order in the script
+
+**Step 3: Re-deploy the script**
+1. Click **"Deploy"** → **"Manage deployments"**
+2. Click the delete icon (trash) to remove the old deployment
+3. Click **"New deployment"** again
+4. Choose **"Web app"**
+5. Set **"Who has access"** to **"Anyone"**
+6. Deploy and copy the new URL
+7. Update your form with the NEW URL
+
+**Step 4: Clear cache and test again**
+1. Clear browser cookies/cache (Ctrl+Shift+Delete)
+2. Refresh your website
+3. Fill the form again and submit
+4. Check Google Sheet
+
+### Problem: No data and no logs
 **Solution:**
-- Check browser console (F12 → Console tab) for error details
-- Verify the Google Apps Script code was copied correctly
-- Make sure you published the script as a Web app
+- Make sure you deployed the script as **"Web app"** (not just saved it)
+- Make sure **"Who has access"** is set to **"Anyone"**
+- Check that the URL you copied has `/exec` at the end
+- Try creating a brand new deployment
+
+### Problem: Data appears but in wrong columns
+**Solution:**
+- The data order in the script must match column headers exactly
+- Check that you added headers in THIS order:
+  - A1: Timestamp
+  - B1: First Name
+  - C1: Last Name
+  - etc.
+
+### Problem: Form shows error message
+**Solution:**
+- Check browser console (F12 → Console tab)
+- Look for any red error messages
+- Common issue: Phone number validation - must be 10 digits starting with 05
+- Date format must be: yyyy/mm/dd
 
 ---
 

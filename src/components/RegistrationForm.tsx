@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { Send, Loader2, CheckCircle2, AlertCircle, User, Phone, MapPin, BookOpen, Mail, HelpCircle, CalendarDays, GraduationCap, ChevronLeft } from "lucide-react";
 
-const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzXxTrmFg9eJez35Z4XHYNGtfc1aku6cJouoYwBBHH6DWj7UyO58_nioTKIgx77_Aiu/exec";
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzlTUlUzSuWBNHiYh4gRfVBa8W3w08cKvSWXgDHkzKMGvK2A6hEHIrvJz5tihbWqwMd/exec";
 
 type FormData = {
   name: string;
@@ -53,7 +53,8 @@ export default function RegistrationForm() {
 
   const validateAlgerianPhone = (phone: string): boolean => {
     const cleaned = phone.replace(/[\s\-]/g, "");
-    return /^0[5-7]\d{8}$/.test(cleaned);
+    // Accept format: 0550123456 or 05 50 12 34 56 or 0550-123-456
+    return /^0[5-7]\d{8}$/.test(cleaned) && cleaned.length === 10;
   };
 
   const validate = (): boolean => {
@@ -61,13 +62,17 @@ export default function RegistrationForm() {
 
     if (!formData.name.trim()) newErrors.name = "الاسم مطلوب";
     if (!formData.lastName.trim()) newErrors.lastName = "اللقب مطلوب";
-    if (!formData.birthDate) newErrors.birthDate = "تاريخ الازدياد مطلوب";
+    if (!formData.birthDate) {
+      newErrors.birthDate = "تاريخ الازدياد مطلوب";
+    } else if (!/^\d{2}\/\d{2}\/\d{4}$/.test(formData.birthDate)) {
+      newErrors.birthDate = "الصيغة: dd/mm/yyyy";
+    }
     if (!formData.birthPlace.trim()) newErrors.birthPlace = "مكان الميلاد مطلوب";
     if (!formData.educationLevel) newErrors.educationLevel = "المستوى الدراسي مطلوب";
     if (!formData.phone.trim()) {
       newErrors.phone = "رقم الهاتف مطلوب";
     } else if (!validateAlgerianPhone(formData.phone)) {
-      newErrors.phone = "الصيغة: 0X XX XX XX XX";
+      newErrors.phone = "رقم الهاتف غير صحيح (05XXXXXXXX)";
     }
     if (!formData.memorizationLevel.trim()) newErrors.memorizationLevel = "مقدار الحفظ مطلوب";
     if (!formData.address.trim()) newErrors.address = "العنوان مطلوب";
@@ -83,9 +88,25 @@ export default function RegistrationForm() {
     const { name, value, type } = e.target;
     const checked = (e.target as HTMLInputElement).checked;
 
+    let finalValue = value;
+
+    // Auto-format date with / (dd/mm/yyyy)
+    if (name === "birthDate" && type === "text") {
+      let digits = value.replace(/\D/g, "");
+      if (digits.length > 8) digits = digits.slice(0, 8);
+      
+      if (digits.length >= 5) {
+        finalValue = digits.slice(0, 2) + "/" + digits.slice(2, 4) + "/" + digits.slice(4, 8);
+      } else if (digits.length >= 3) {
+        finalValue = digits.slice(0, 2) + "/" + digits.slice(2, 4);
+      } else {
+        finalValue = digits;
+      }
+    }
+
     setFormData((prev) => ({
       ...prev,
-      [name]: type === "checkbox" ? checked : value,
+      [name]: type === "checkbox" ? checked : finalValue,
     }));
 
     if (errors[name as keyof FormData]) {
@@ -286,7 +307,7 @@ export default function RegistrationForm() {
                     name="birthDate"
                     value={formData.birthDate}
                     onChange={handleChange}
-                    placeholder="yyyy/mm/dd"
+                    placeholder="dd/mm/yyyy"
                     className={`${inputBase} ${inputFocus} ${errors.birthDate ? inputError : ""}`}
                   />
                   {errors.birthDate && <p className="text-red-500 text-xs mt-1.5 font-medium">{errors.birthDate}</p>}

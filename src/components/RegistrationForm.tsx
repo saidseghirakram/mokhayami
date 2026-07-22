@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { Send, Loader2, CheckCircle2, AlertCircle, User, Phone, MapPin, BookOpen, Mail, HelpCircle, CalendarDays, GraduationCap, ChevronLeft } from "lucide-react";
 
-const SCRIPT_URL = "ضع الرابط هنا";
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzXxTrmFg9eJez35Z4XHYNGtfc1aku6cJouoYwBBHH6DWj7UyO58_nioTKIgx77_Aiu/exec";
 
 type FormData = {
   name: string;
@@ -282,10 +282,11 @@ export default function RegistrationForm() {
                 <div>
                   <label className={labelClass}>{renderIcon(CalendarDays)} تاريخ الازدياد *</label>
                   <input
-                    type="date"
+                    type="text"
                     name="birthDate"
                     value={formData.birthDate}
                     onChange={handleChange}
+                    placeholder="yyyy/mm/dd"
                     className={`${inputBase} ${inputFocus} ${errors.birthDate ? inputError : ""}`}
                   />
                   {errors.birthDate && <p className="text-red-500 text-xs mt-1.5 font-medium">{errors.birthDate}</p>}

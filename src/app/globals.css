@@ -1,0 +1,142 @@
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800;900&family=Amiri:wght@400;700&display=swap');
+@import "tailwindcss";
+
+@theme inline {
+  --color-green-primary: #1B6B3C;
+  --color-green-dark: #0F4A28;
+  --color-green-deeper: #0A3519;
+  --color-green-light: #228B50;
+  --color-green-muted: #E8F5EC;
+  --color-beige: #FAF8F4;
+  --color-beige-warm: #F5F0E6;
+  --color-beige-dark: #EDE5D4;
+  --color-gold: #C8A951;
+  --color-gold-light: #D4B96A;
+  --color-gold-muted: #FDF6E3;
+  --font-cairo: 'Cairo', sans-serif;
+  --font-amiri: 'Amiri', serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Cairo', sans-serif;
+  background-color: #FAF8F4;
+  color: #1a1a1a;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #FAF8F4;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #1B6B3C;
+  border-radius: 3px;
+}
+
+.pattern-bg {
+  background-image:
+    radial-gradient(circle at 20% 50%, rgba(27, 107, 60, 0.02) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, rgba(200, 169, 81, 0.03) 0%, transparent 50%),
+    radial-gradient(circle at 60% 80%, rgba(27, 107, 60, 0.02) 0%, transparent 50%);
+}
+
+.glass {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+input:focus, select:focus, textarea:focus {
+  outline: none;
+  border-color: #1B6B3C;
+  box-shadow: 0 0 0 3px rgba(27, 107, 60, 0.1);
+}
+
+input[type="checkbox"] {
+  accent-color: #1B6B3C;
+  width: 18px;
+  height: 18px;
+}
+
+input[type="radio"] {
+  accent-color: #1B6B3C;
+  width: 18px;
+  height: 18px;
+}
+
+::selection {
+  background: rgba(27, 107, 60, 0.15);
+  color: #0F4A28;
+}
+
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes scale-in {
+  from {
+    opacity: 0;
+    transform: scale(0.92);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+.animate-fade-in-up {
+  animation: fade-in-up 0.6s ease-out both;
+}
+
+.animate-fade-in {
+  animation: fade-in 0.5s ease-out both;
+}
+
+.animate-scale-in {
+  animation: scale-in 0.5s ease-out both;
+}
+
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+}
+
+.delay-100 { animation-delay: 0.1s; }
+.delay-200 { animation-delay: 0.2s; }
+.delay-300 { animation-delay: 0.3s; }
+.delay-400 { animation-delay: 0.4s; }
+.delay-500 { animation-delay: 0.5s; }

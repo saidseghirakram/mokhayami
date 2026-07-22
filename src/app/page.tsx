@@ -15,9 +15,9 @@ export default function Home() {
         <Hero />
         <About />
         <Rules />
-        <Dua />
         <Documents />
         <RegistrationForm />
+        <Dua />
       </main>
       <Footer />
     </div>

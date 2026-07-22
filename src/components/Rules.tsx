@@ -63,31 +63,90 @@ export default function Rules() {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-          {rules.map((rule, index) => {
-            const Icon = rule.icon;
-            return (
-              <div
-                key={index}
-                className="group relative bg-white rounded-2xl p-6 shadow-sm border border-gray-100/80 hover:shadow-xl hover:border-gray-200/50 transition-all duration-500 hover:-translate-y-2 overflow-hidden"
-              >
-                <div className="absolute top-0 right-0 w-20 h-20 bg-gradient-to-bl from-gray-50 to-transparent rounded-bl-[1.5rem] opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                <div className="relative flex items-start gap-4">
-                  <div className={`w-12 h-12 bg-gradient-to-br ${rule.color} rounded-xl flex items-center justify-center shrink-0 shadow-lg group-hover:scale-110 group-hover:shadow-xl transition-all duration-500`}>
-                    <Icon size={20} className="text-white" />
-                  </div>
-                  <div className="flex-1 min-w-0">
-                    <h4 className="font-bold text-green-dark mb-1.5 text-base">
-                      {rule.title}
-                    </h4>
-                    <p className="text-gray-400 text-sm leading-relaxed">
-                      {rule.description}
-                    </p>
-                  </div>
+        <div className="relative max-w-5xl mx-auto">
+          {/* Vertical line */}
+          <div className="absolute right-6 sm:right-1/2 top-0 bottom-0 w-1 bg-gradient-to-b from-green-primary/20 via-green-primary/40 to-green-primary/20 sm:translate-x-1/2 pointer-events-none" />
+          
+          <div className="space-y-8 sm:space-y-12">
+            {rules.map((rule, index) => {
+              const Icon = rule.icon;
+              const isEven = index % 2 === 0;
+              return (
+                <div key={index} className="relative sm:flex sm:items-center">
+                  {/* Timeline dot */}
+                  <div className="hidden sm:block absolute right-6 sm:right-1/2 w-5 h-5 rounded-full bg-beige-warm border-4 border-green-primary translate-x-1/2 sm:translate-x-1/2 top-3 sm:top-1/2 sm:-translate-y-1/2 z-50" />
+                  
+                  {isEven ? (
+                    <>
+                      {/* Card on RIGHT side (even) */}
+                      <div className="hidden sm:block sm:w-1/2 sm:pl-12">
+                        <div className="bg-white rounded-2xl p-6 shadow-md border border-gray-100 hover:shadow-lg transition-all duration-300">
+                          <div className="flex items-start gap-4">
+                            <div className={`w-12 h-12 bg-gradient-to-br ${rule.color} rounded-xl flex items-center justify-center shrink-0 shadow-md`}>
+                              <Icon size={20} className="text-white" />
+                            </div>
+                            <div className="flex-1 min-w-0">
+                              <h4 className="font-bold text-green-dark mb-2 text-base">{rule.title}</h4>
+                              <p className="text-gray-500 text-sm leading-relaxed">{rule.description}</p>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      {/* Mobile card */}
+                      <div className="sm:hidden ml-10">
+                        <div className="bg-white rounded-2xl p-5 shadow-md border border-gray-100 hover:shadow-lg transition-all duration-300">
+                          <div className="flex items-start gap-3">
+                            <div className={`w-10 h-10 bg-gradient-to-br ${rule.color} rounded-xl flex items-center justify-center shrink-0 shadow-md`}>
+                              <Icon size={18} className="text-white" />
+                            </div>
+                            <div className="flex-1 min-w-0">
+                              <h4 className="font-bold text-green-dark mb-1 text-sm">{rule.title}</h4>
+                              <p className="text-gray-500 text-xs leading-relaxed">{rule.description}</p>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      {/* Empty left spacer */}
+                      <div className="hidden sm:block sm:w-1/2" />
+                    </>
+                  ) : (
+                    <>
+                      {/* Empty right spacer */}
+                      <div className="hidden sm:block sm:w-1/2" />
+                      {/* Card on LEFT side (odd) */}
+                      <div className="hidden sm:block sm:w-1/2 sm:pr-12">
+                        <div className="bg-white rounded-2xl p-6 shadow-md border border-gray-100 hover:shadow-lg transition-all duration-300">
+                          <div className="flex items-start gap-4">
+                            <div className={`w-12 h-12 bg-gradient-to-br ${rule.color} rounded-xl flex items-center justify-center shrink-0 shadow-md`}>
+                              <Icon size={20} className="text-white" />
+                            </div>
+                            <div className="flex-1 min-w-0">
+                              <h4 className="font-bold text-green-dark mb-2 text-base">{rule.title}</h4>
+                              <p className="text-gray-500 text-sm leading-relaxed">{rule.description}</p>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      {/* Mobile card */}
+                      <div className="sm:hidden ml-10">
+                        <div className="bg-white rounded-2xl p-5 shadow-md border border-gray-100 hover:shadow-lg transition-all duration-300">
+                          <div className="flex items-start gap-3">
+                            <div className={`w-10 h-10 bg-gradient-to-br ${rule.color} rounded-xl flex items-center justify-center shrink-0 shadow-md`}>
+                              <Icon size={18} className="text-white" />
+                            </div>
+                            <div className="flex-1 min-w-0">
+                              <h4 className="font-bold text-green-dark mb-1 text-sm">{rule.title}</h4>
+                              <p className="text-gray-500 text-xs leading-relaxed">{rule.description}</p>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </>
+                  )}
                 </div>
-              </div>
-            );
-          })}
+              );
+            })}
+          </div>
         </div>
       </div>
     </section>

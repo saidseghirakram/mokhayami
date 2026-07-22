@@ -1,24 +1,6 @@
 "use client";
 
-import { ArrowDown, BookOpen, Users, Shield } from "lucide-react";
-
-const stats = [
-  {
-    icon: BookOpen,
-    value: "30+",
-    label: "جزء قرآني",
-  },
-  {
-    icon: Users,
-    value: "120+",
-    label: "طالب مسجل",
-  },
-  {
-    icon: Shield,
-    value: "10+",
-    label: "معلمين مؤهلين",
-  },
-];
+import { ArrowDown } from "lucide-react";
 
 export default function Hero() {
   return (
@@ -111,29 +93,13 @@ export default function Hero() {
               تعرّف على المزيد
             </a>
           </div>
-
-          {/* Stats */}
-          <div className="animate-fade-in-up delay-500 grid grid-cols-3 gap-4 sm:gap-8 max-w-lg mx-auto">
-            {stats.map((stat, index) => {
-              const Icon = stat.icon;
-              return (
-                <div key={index} className="text-center group">
-                  <div className="w-12 h-12 bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl flex items-center justify-center mx-auto mb-3 group-hover:bg-white/10 group-hover:border-gold/20 transition-all duration-300">
-                    <Icon size={22} className="text-gold" />
-                  </div>
-                  <p className="text-2xl sm:text-3xl font-black text-white">{stat.value}</p>
-                  <p className="text-xs sm:text-sm text-white/35 mt-1">{stat.label}</p>
-                </div>
-              );
-            })}
-          </div>
         </div>
       </div>
 
-      {/* Bottom curve */}
-      <div className="absolute bottom-0 left-0 right-0">
-        <svg viewBox="0 0 1440 80" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full">
-          <path d="M0 80L48 74.7C96 69 192 59 288 53.3C384 48 480 48 576 53.3C672 59 768 69 864 69.3C960 69 1056 59 1152 53.3C1248 48 1344 48 1392 48L1440 48V80H1392C1344 80 1248 80 1152 80C1056 80 960 80 864 80C768 80 672 80 576 80C480 80 384 80 288 80C192 80 96 80 48 80H0Z" fill="#FAF8F4"/>
+      {/* Bottom wave */}
+      <div className="absolute bottom-0 left-0 right-0 h-16 sm:h-20">
+        <svg viewBox="0 0 1440 120" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-full" preserveAspectRatio="none">
+          <path d="M0 60L60 55C120 50 240 40 360 40C480 40 600 50 720 55C840 60 960 60 1080 55C1200 50 1320 40 1380 35L1440 30V120H1380C1320 120 1200 120 1080 120C960 120 840 120 720 120C600 120 480 120 360 120C240 120 120 120 60 120H0Z" fill="#FAF8F4"/>
         </svg>
       </div>
     </section>
